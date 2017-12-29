@@ -8,9 +8,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 
-// TODO: new Throwable print stack trace, get where the oracle is and count from there
-// TODO: propagation of oracles to output
-// TODO: use the unit tests case of defects4j and use the oracles
+
 
 public class MyMethodVisitor extends MethodVisitor {
 
@@ -118,7 +116,7 @@ public class MyMethodVisitor extends MethodVisitor {
 			case Opcodes.DRETURN:
 			case Opcodes.RETURN:			
 				super.visitMethodInsn(
-						Opcodes.INVOKESTATIC, "com/issta/Profiler", "printLogBook", 
+						Opcodes.INVOKESTATIC, "com/issta/Profiler", "afterTest", 
 						Type.getMethodDescriptor(Type.VOID_TYPE), false);
 				break;
 			}

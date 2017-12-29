@@ -2,9 +2,8 @@ package com.issta;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.security.GeneralSecurityException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /*
 1)	Once an infection is detected (i.e., when a strong oracle is triggered), 
@@ -19,143 +18,73 @@ import java.util.HashSet;
 	g.	classStackSize
  */
 
-// TODO: Capture "Strong Oracle" events -- maybe better handled in the MyMethodVisitor part to reduce added code
-// TODO: Check if we need to capture all info till Oracle or starting from oracle
-// TODO: what is class stack size (what are we trying to capture here)
-// TODO: get a sample of a Junit with the oracles to test on
+// TODO: new Throwable print stack trace, get where the oracle is and count from there
+// TODO: use the unit tests case of defects4j and use the oracles
 // TODO: When done, remove the static and the printlog, this should be done by calling the before/after test function in the 
 //	@After and @Before annotations in Junit
 
 public class Profiler{
-	private static HashMap<String, LogInfo> strongOracleLogInfoMap;
+	private static HashMap<String, StrongOracleInfo> strongOracleLogInfoMap;
 	private static HashMap<String, Integer> strongOracleCount;
-
-	// Statements
-	private static HashMap<Integer, Integer> instructionCount;
-	private static int numExecStatements;
-
-	// Conditionals
-	private static HashSet<Integer> conditionalSet;
-	private static int numExecConditionals;
-
-	// Modulo
-	private static HashSet<Integer> moduloSet;
-	private static int numExecModulo;
-
-	// Multiply
-	private static HashSet<Integer> multiplySet;
-	private static int numExecMultiply;
-
-	// Divide
-	private static HashSet<Integer> divideSet;
-	private static int numExecDiv;
-
-	// Invoke
-	private static HashSet<Integer> invokeSet;
-	private static int numExecInvoke;
-
-	// Stack
-	private static int classStackSize;
 
 	// Run identifier
 	private static String runIdentifier;
-	private static String strongOracleIdentifier;
 
 	static{
 		beforeTest("testRun");
 	}
 
 	public static void logInstruction(int ins){
-		if(instructionCount.containsKey(ins)){
-			instructionCount.put(ins, instructionCount.get(ins) + 1);
-		}else{
-			instructionCount.put(ins, 1);
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logInstruction(ins);
 		}
-		numExecStatements++;
 	}
 
-	public static void logConditional(int insNum){
-		conditionalSet.add(insNum);
-		numExecConditionals++;
+	public static void logConditional(int ins){
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logConsitionals(ins);
+		}
 	}
 
-	public static void logModulo(int insNum){
-		moduloSet.add(insNum);
-		numExecModulo++;
+	public static void logModulo(int ins){
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logModulo(ins);
+		}
 	}
 
-	public static void logMultiply(int insNum){
-		multiplySet.add(insNum);
-		numExecMultiply++;
+	public static void logMultiply(int ins){
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logMultiply(ins);
+		}
 	}
 
-	public static void logDivide(int insNum){
-		divideSet.add(insNum);
-		numExecDiv++;
+	public static void logDivide(int ins){
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logDivide(ins);
+		}
 	}
 
-	public static void logInvoke(int insNum){
-		invokeSet.add(insNum);
-		numExecInvoke++;
+	public static void logInvoke(int ins){
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logInvoke(ins);
+		}
 	}
-	
-	public static void printLogBook(){
-		saveAndReset("1");
-		afterTest();
-	}
-
 
 	public static void saveAndReset(String identifier){	
-		LogInfo info = LogInfo.createLogInfo(
-				instructionCount.keySet().size(), numExecStatements, 
-				conditionalSet.size(), numExecConditionals, 
-				moduloSet.size(), numExecModulo, 
-				multiplySet.size(),	numExecMultiply, 
-				divideSet.size(), numExecDiv, 
-				invokeSet.size(), numExecInvoke, 
-				classStackSize);
-
-		strongOracleLogInfoMap.put(strongOracleIdentifier, info);
-		initialize();
-		
-		strongOracleIdentifier = identifier;
-
-		if(strongOracleCount.containsKey(strongOracleIdentifier)){
-			strongOracleCount.put(strongOracleIdentifier, strongOracleCount.get(strongOracleIdentifier) + 1);
+		StrongOracleInfo strongOracle = StrongOracleInfo.createStrongOracleInfo(identifier);
+		strongOracleLogInfoMap.put(identifier, strongOracle);
+				
+		if(strongOracleCount.containsKey(identifier)){
+			strongOracleCount.put(identifier, strongOracleCount.get(identifier) + 1);
 		}else{
-			strongOracleCount.put(strongOracleIdentifier, 1);
+			strongOracleCount.put(identifier, 1);
 		}
 	}
-
-	private static void initialize(){
-		instructionCount = new HashMap<>();
-		numExecStatements = 0;
-
-		conditionalSet = new HashSet<>();
-		numExecConditionals = 0;
-
-		moduloSet = new HashSet<>();
-		numExecModulo = 0;
-
-		multiplySet = new HashSet<>();
-		numExecMultiply = 0;
-
-		divideSet = new HashSet<>();
-		numExecDiv = 0;
-
-		invokeSet = new HashSet<>();
-		numExecInvoke = 0;
-
-		classStackSize = 0;
-	}
-
 
 	public static void beforeTest(String testIdentifier){
 		strongOracleLogInfoMap = new HashMap<>();
 		strongOracleCount = new HashMap<>();
-		strongOracleIdentifier = "None";
 		runIdentifier = testIdentifier;
-		initialize();
 	}
 
 	private final static String COMMA_DELIMITER = ",";
@@ -167,10 +96,12 @@ public class Profiler{
 			+ "NUM_INVOKE,NUM_EXECINVOKE,"
 			+ "CLASS_STACK_SIZE";
 	public static void afterTest(){
+		new Throwable().printStackTrace();
+		
 		// print to csv file
 		FileWriter fileWriter = null;
 		try {
-			fileWriter = new FileWriter(Main._DIRECTORY_OUTPUT + runIdentifier + ".csv");
+			fileWriter = new FileWriter(Main._DIRECTORY_OUTPUT + runIdentifier + "_" + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()) + ".csv");
 
 			//Write the CSV file header
 			fileWriter.append(COLUMNS);
@@ -179,43 +110,43 @@ public class Profiler{
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			//Write a new student object list to the CSV file
-			LogInfo temp = null;
+			StrongOracleInfo temp = null;
 			for (String key : strongOracleLogInfoMap.keySet()) {
 				temp = strongOracleLogInfoMap.get(key);
 				fileWriter.append(key);
 				fileWriter.append(COMMA_DELIMITER);
-
-				fileWriter.append(temp.numStatements.toString());
+				
+				fileWriter.append(((Integer)temp.instructionSet.size()).toString());
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(temp.numExecStatements.toString());
-				fileWriter.append(COMMA_DELIMITER);
-
-				fileWriter.append(temp.numConditionals.toString());
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(temp.numExecConditionals.toString());
+				fileWriter.append(((Integer)temp.numExecStatements).toString());
 				fileWriter.append(COMMA_DELIMITER);
 
-				fileWriter.append(temp.numModulo.toString());
+				fileWriter.append(((Integer)temp.conditionalSet.size()).toString());
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(temp.numExecModulo.toString());
-				fileWriter.append(COMMA_DELIMITER);
-
-				fileWriter.append(temp.numMultiply.toString());
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(temp.numExecMultiply.toString());
+				fileWriter.append(((Integer)temp.numExecConditionals).toString());
 				fileWriter.append(COMMA_DELIMITER);
 
-				fileWriter.append(temp.numDivide.toString());
+				fileWriter.append(((Integer)temp.moduloSet.size()).toString());
 				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(temp.numExecDivide.toString());
-				fileWriter.append(COMMA_DELIMITER);
-
-				fileWriter.append(temp.numInvoke.toString());
-				fileWriter.append(COMMA_DELIMITER);
-				fileWriter.append(temp.numExecInvoke.toString());
+				fileWriter.append(((Integer)temp.numExecModulo).toString());
 				fileWriter.append(COMMA_DELIMITER);
 
-				fileWriter.append(temp.classStackSize.toString());
+				fileWriter.append(((Integer)temp.multiplySet.size()).toString());
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(((Integer)temp.numExecMultiply).toString());
+				fileWriter.append(COMMA_DELIMITER);
+
+				fileWriter.append(((Integer)temp.divideSet.size()).toString());
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(((Integer)temp.numExecDiv).toString());
+				fileWriter.append(COMMA_DELIMITER);
+
+				fileWriter.append(((Integer)temp.invokeSet.size()).toString());
+				fileWriter.append(COMMA_DELIMITER);
+				fileWriter.append(((Integer)temp.numExecInvoke).toString());
+				fileWriter.append(COMMA_DELIMITER);
+
+				fileWriter.append(((Integer)temp.callStackSize).toString());
 				fileWriter.append(NEW_LINE_SEPARATOR);
 			}
 			
