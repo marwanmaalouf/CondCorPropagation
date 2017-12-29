@@ -98,21 +98,14 @@ public class Profiler{
 		invokeSet.add(insNum);
 		numExecInvoke++;
 	}
-
-	public static void logStackDelta(int size){
-		classStackSize += size;
-	}
 	
 	public static void printLogBook(){
-		classStackSize++;
 		saveAndReset("1");
 		afterTest();
 	}
 
 
-	public static void saveAndReset(String identifier){
-		classStackSize--;// to account for the GETSTATIC System.out
-		
+	public static void saveAndReset(String identifier){	
 		LogInfo info = LogInfo.createLogInfo(
 				instructionCount.keySet().size(), numExecStatements, 
 				conditionalSet.size(), numExecConditionals, 
@@ -124,7 +117,6 @@ public class Profiler{
 
 		strongOracleLogInfoMap.put(strongOracleIdentifier, info);
 		initialize();
-		classStackSize = 1;
 		
 		strongOracleIdentifier = identifier;
 
@@ -154,7 +146,7 @@ public class Profiler{
 		invokeSet = new HashSet<>();
 		numExecInvoke = 0;
 
-		//classStackSize = 0;
+		classStackSize = 0;
 	}
 
 
@@ -164,7 +156,6 @@ public class Profiler{
 		strongOracleIdentifier = "None";
 		runIdentifier = testIdentifier;
 		initialize();
-		classStackSize = 0;
 	}
 
 	private final static String COMMA_DELIMITER = ",";
