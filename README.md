@@ -16,7 +16,7 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.Rule;
 
-import com.issta.*;
+import com.issta.Profiler;
 
 public class TestExample1 {
 	
