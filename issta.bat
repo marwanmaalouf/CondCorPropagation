@@ -9,5 +9,5 @@ mkdir instrumented\jar
 mkdir instrumented\classes
 @echo on
 
-java -cp "src/libs/*";"./out/" com.issta.Main "C:/Users/User/Desktop/ISSTA/SourceCodeToTest/Test.class" 
-java -cp .\instrumented\classes;.\out Test
+java -cp "src/libs/*";"./out/" com.issta.Main "C:/Users/User/Desktop/ISSTA/SourceCodeToTest/Example1.class" 
+java -cp .\instrumented\classes;.\out Example1
