@@ -7,7 +7,7 @@
 
 
 ## Set up with JUnit 4 test cases
-'''
+```
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -45,7 +45,7 @@ public class TestExample1 {
 	public final void test...
 
 }
-''''
+```
 
 
 
