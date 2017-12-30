@@ -101,7 +101,7 @@ public class Profiler{
 		
 		try {
 			fileWriter = new FileWriter(
-					//Main._DIRECTORY_OUTPUT + 
+					Main._DIRECTORY_OUTPUT + 
 					runIdentifier + "_" + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()) + ".csv");
 
 			//Write the CSV file header

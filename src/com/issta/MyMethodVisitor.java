@@ -8,6 +8,8 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 
 public class MyMethodVisitor extends MethodVisitor {
@@ -18,12 +20,14 @@ public class MyMethodVisitor extends MethodVisitor {
 	protected static int count;
 	protected int line;
 	
+	private final static String StrongOraclePattern;
+	private final static Pattern pattern; 
+
+	static{	         
+		StrongOraclePattern = ".*strong\\soracle.*";
+		pattern = Pattern.compile(StrongOraclePattern, Pattern.CASE_INSENSITIVE);
+	}
 	
-	private int tempCounter;
-
-	protected final static String StrongOracleIdentifier = "Strong Oracle";
-
-
 	public MyMethodVisitor(int api, MethodVisitor mv, int access, String name, String desc, String signature, String className, String[] exceptions) {
 		super(api, mv);
 		methodName = name;
@@ -58,9 +62,7 @@ public class MyMethodVisitor extends MethodVisitor {
 	// Label instruction not counted as an instruction 
 	@Override
 	public void visitLabel(Label label) {
-		//logInstruction();
 		super.visitLabel(label);
-		//count++;
 	}
 
 
@@ -164,8 +166,9 @@ public class MyMethodVisitor extends MethodVisitor {
 	@Override
 	public void visitLdcInsn(Object cst) {
 		if(cst instanceof String){
-			if(((String) cst).contains(StrongOracleIdentifier)){
-				logNewOracle((String) cst);
+			String temp = (String) cst;
+			if(pattern.matcher(temp).matches()){
+				logNewOracle(temp);
 			}
 		}
 		logInstruction();
