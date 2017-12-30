@@ -95,13 +95,14 @@ public class Profiler{
 			+ "NUM_DIV,NUM_EXECDIV,"
 			+ "NUM_INVOKE,NUM_EXECINVOKE,"
 			+ "CLASS_STACK_SIZE";
-	public static void afterTest(){
-		new Throwable().printStackTrace();
-		
+	public static void afterTest(){		
 		// print to csv file
 		FileWriter fileWriter = null;
+		
 		try {
-			fileWriter = new FileWriter(Main._DIRECTORY_OUTPUT + runIdentifier + "_" + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()) + ".csv");
+			fileWriter = new FileWriter(
+					//Main._DIRECTORY_OUTPUT + 
+					runIdentifier + "_" + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()) + ".csv");
 
 			//Write the CSV file header
 			fileWriter.append(COLUMNS);

@@ -8,3 +8,4 @@ SourceCodeToTest/
 jar/
 instrumented/
 [Oo]ut/
+*.csv
