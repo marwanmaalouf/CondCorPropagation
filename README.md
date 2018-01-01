@@ -1,9 +1,12 @@
 # Coincidental Correctness Propagation
 
 ## Set up
-1. Edit the path to the jar file to profile in the issta_jar or the path to the class file in issta.bat
-2. Run issta.bat
-3. Output generated in instrumented directory
+1. Edit the path to the jar file to profile in the issta_jar or the path to the class file in run.bat
+2. Run run.bat
+3. Replace the original file with the generated files located in instrumented directory
+4. Do the necessary changes in test.bat 
+5. Run test.bat
+6. Check instrumented/profile directory for the generated csv files
 
 
 ## Set up with JUnit 4 test cases
@@ -39,6 +42,7 @@ public class TestExample1 {
 	@Test
 	public final void testFoo() {
 		Example1.foo();
+		assert...
 	}
 
 	@Test
