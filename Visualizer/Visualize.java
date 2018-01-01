@@ -43,7 +43,13 @@ public class Visualize {
         }
         
         Path currentRelativePath = Paths.get("");
-		String filePath = currentRelativePath.toAbsolutePath().toString() + args[0];
+		String filePath;
+		if(args[0].substring(0, 2).equals("C:")){
+			filePath = args[0];
+		}else{
+			filePath = currentRelativePath.toAbsolutePath().toString() + args[0];
+
+		}
 		System.out.println("Loading: " + filePath);
         InputStream in = new FileInputStream(filePath);
         

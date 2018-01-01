@@ -15,23 +15,33 @@ import java.util.HashMap;
 	d.	numMultiply, numExecMultiply
 	e.	numDivide, numExecDidvide
 	f.	numInvoke, numExecInvoke
-	g.	classStackSize
+	g.	callStackSize
  */
 
 // TODO: new Throwable print stack trace, get where the oracle is and count from there
+// Use the mock in Example1 as an example:
+// For each oracle get the stack trace
+// Before exiting, get the stack trace
+// Find common root in between oracleTrace[i] and final trace
+// propagation[i] = dist(commonRooot, oracleTrace[i][0]) + dist(commonRoot, finalTrace[0])
+// ISSUE: How to get the final trace? @After does not help...
+
 // TODO: use the unit tests case of defects4j and use the oracles
+
 // TODO: When done, remove the static and the printlog, this should be done by calling the before/after test function in the 
 //	@After and @Before annotations in Junit
 
 public class Profiler{
 	private static HashMap<String, StrongOracleInfo> strongOracleLogInfoMap;
 	private static HashMap<String, Integer> strongOracleCount;
+	private static final String DIRECTORY_PATH;
 
 	// Run identifier
 	private static String runIdentifier;
 
 	static{
-		beforeTest("testRun");
+		DIRECTORY_PATH = Main._DIRECTORY_OUTPUT + "profile//";
+		//beforeTest("testRun");
 	}
 
 	public static void logInstruction(int ins){
@@ -101,7 +111,7 @@ public class Profiler{
 		
 		try {
 			fileWriter = new FileWriter(
-					Main._DIRECTORY_OUTPUT + 
+					DIRECTORY_PATH + 
 					runIdentifier + "_" + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()) + ".csv");
 
 			//Write the CSV file header
