@@ -50,6 +50,7 @@ public class TestExample1 {
 
 }
 ```
+OR use run instrumentedTest_XXX.bat after changing the path to the test cases
 
 
 
