@@ -5,6 +5,8 @@
 2. InstrumentSource_jar.bat: instrument source jar file targetted, output to ./instrumented/jar
 3. InstrumentTest_classes.bat: instrument test classes to generate a profile, , output to ./instrumented/classes
 4. InstrumentTest_jar.bat: instrument test jar to generate a profile, , output to ./instrumented/classes
+5. build.bat: builds the profiler and instrumenter code
+6. Check.bat: Print the bytecode of the targetted class
 
 
 
