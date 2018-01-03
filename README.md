@@ -1,5 +1,13 @@
 # Coincidental Correctness Propagation
 
+## Info on files:
+1. InstrumentSource_classes.bat: instrument source classes targetted, output to ./instrumented/classes
+2. InstrumentSource_jar.bat: instrument source jar file targetted, output to ./instrumented/jar
+3. InstrumentTest_classes.bat: instrument test classes to generate a profile, , output to ./instrumented/classes
+4. InstrumentTest_jar.bat: instrument test jar to generate a profile, , output to ./instrumented/classes
+
+
+
 ## Set up
 1. Edit the path to the jar file to profile in the issta_jar or the path to the class file in run.bat
 2. Run run.bat
