@@ -4,6 +4,7 @@
 # Build results
 
 *.class
+*.jar
 SourceCodeToTest/
 jar/
 instrumented/

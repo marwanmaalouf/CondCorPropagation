@@ -5,6 +5,7 @@ javac -d out -g -parameters -cp "./src/libs/*";"./" src/com/issta/*.java
 javac -d out -g -parameters -cp "./src/libs/*";"./" src/com/issta/test/*.java
 echo Build completed
 
+mkdir out
 mkdir instrumented
 mkdir instrumented\jar
 mkdir instrumented\classes
