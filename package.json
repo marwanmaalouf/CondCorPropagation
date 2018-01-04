@@ -1,0 +1,23 @@
+{
+  "name": "Coincidental correctness propagation",
+  "version": "1.1.5",
+  "description": "A module to instrument classes and test case in order to capture the propagation of coincidental correctness using oracles",
+  "author": "Marwan Maalouf <mjm30@mail.aub.edu>",
+},
+  "scripts": {
+    "build": "build.bat",
+    "instrumentJarClasses": "instrumentSource_jar.bat",
+    "instrumentJarTests": "instrumentTest_jar.bat",
+    "print": "printBytecode.bat",
+  },
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/marwanmaalouf/CondCorPropagation"
+},
+  "keywords": [
+  "instrument",
+  "java",
+  "profile"
+],
+  "analyze": true
+}
