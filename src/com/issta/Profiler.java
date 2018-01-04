@@ -26,10 +26,6 @@ import java.util.HashMap;
 // propagation[i] = dist(commonRooot, oracleTrace[i][0]) + dist(commonRoot, finalTrace[0])
 // ISSUE: How to get the final trace? @After does not help...
 
-// TODO: use the unit tests case of defects4j and use the oracles
-
-// TODO: When done, remove the static and the printlog, this should be done by calling the before/after test function in the 
-//	@After and @Before annotations in Junit
 
 public class Profiler{
 	private static HashMap<String, StrongOracleInfo> strongOracleLogInfoMap;
@@ -108,6 +104,9 @@ public class Profiler{
 	public static void afterTest(){		
 		// print to csv file
 		FileWriter fileWriter = null;
+		if(strongOracleLogInfoMap.isEmpty()){
+			return;
+		}
 		
 		try {
 			fileWriter = new FileWriter(
