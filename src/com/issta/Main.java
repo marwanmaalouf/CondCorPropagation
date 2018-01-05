@@ -47,7 +47,26 @@ public class Main {
 					classFileInputStream = jis.getInputStream(inputJarEntry);
 					ClassWriter cw = instrumentClassFile(classFileInputStream, entryName);
 					classFileInputStream.close();
+					try{
 					bytes = cw.toByteArray();
+					}catch(RuntimeException e){
+						e.printStackTrace();
+						System.out.println("Aborting instrumentation, copying file as is");
+						classFileInputStream = jis.getInputStream(inputJarEntry);
+						int len = classFileInputStream.available();
+						bytes = new byte[len];
+						int nRead = 0;
+						int nReadTotal = 0;
+						int nOffset = 0;
+						while (len > 0)
+						{
+							nRead = classFileInputStream.read(bytes, nOffset, len);
+							nReadTotal += nRead;
+							nOffset += nRead;
+							len -= nRead;
+						}
+
+					}
 				}else{
 					InputStream inputJarStream = jis.getInputStream(inputJarEntry);
 					int len = inputJarStream.available();

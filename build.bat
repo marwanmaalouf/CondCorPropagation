@@ -1,4 +1,3 @@
-cls
 @echo off
 echo Building files ...
 javac -d out -g -parameters -cp "./src/libs/*";"./" src/com/issta/*.java
