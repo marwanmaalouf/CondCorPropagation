@@ -76,7 +76,8 @@ public class Profiler{
 		}
 	}
 
-	public static void saveAndReset(String identifier){	
+	public static void saveAndReset(String identifier){
+		System.out.println("##################################################Strong oracle identified: " + identifier);
 		StrongOracleInfo strongOracle = StrongOracleInfo.createStrongOracleInfo(identifier);
 		strongOracleLogInfoMap.put(identifier, strongOracle);
 				
@@ -101,7 +102,7 @@ public class Profiler{
 			+ "NUM_DIV,NUM_EXECDIV,"
 			+ "NUM_INVOKE,NUM_EXECINVOKE,"
 			+ "CLASS_STACK_SIZE";
-	public static void afterTest(){		
+	public static void afterTest(){	
 		// print to csv file
 		FileWriter fileWriter = null;
 		if(strongOracleLogInfoMap.isEmpty()){
@@ -159,7 +160,8 @@ public class Profiler{
 				fileWriter.append(((Integer)temp.callStackSize).toString());
 				fileWriter.append(NEW_LINE_SEPARATOR);
 			}
-			
+			System.out.println("Output: " + DIRECTORY_PATH + 
+					runIdentifier + "_" + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()) + ".csv");
 		} catch (Exception e) {
 			System.out.println("Error in CsvFileWriter in '" + runIdentifier +"'");
 			e.printStackTrace();

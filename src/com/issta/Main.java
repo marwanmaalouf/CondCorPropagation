@@ -65,6 +65,8 @@ public class Main {
 							nOffset += nRead;
 							len -= nRead;
 						}
+						
+						// TODO: log class name into a txt file
 
 					}
 				}else{

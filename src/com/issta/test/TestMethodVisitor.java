@@ -22,15 +22,19 @@ public class TestMethodVisitor extends MethodVisitor {
 	
 	static{
 		reservedNames = new HashSet<String>();
-		reservedNames.add("<init>");
-		reservedNames.add("<clinit>");
-		reservedNames.add("setUp");
-		reservedNames.add("tearDown");
+		//reservedNames.add("<init>");
+		//reservedNames.add("<clinit>");
+		//reservedNames.add("setUp");
+		//reservedNames.add("tearDown");
 	}
 	
 	public TestMethodVisitor(int api, MethodVisitor mv, int access, String name, String desc, String signature, String className, String[] exceptions) {
 		super(api, mv);
-		methodIdentifier = className + "." + name + desc;
+		String tempClassName = className;
+		if(className.contains("/")){
+			tempClassName = className.replace('/', '.');
+		}
+		methodIdentifier = tempClassName + "." + name + desc;
 		isInstrumentable = !reservedNames.contains(name);
 		
 	}

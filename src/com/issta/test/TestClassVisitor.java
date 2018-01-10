@@ -5,9 +5,11 @@ import org.objectweb.asm.*;
 public class TestClassVisitor extends ClassVisitor {
 
 	protected String className;
+//	protected boolean foundTearDown;
 	
     public TestClassVisitor(int api) {
         super(api);
+ //       foundTearDown = false;
     }
 
     public TestClassVisitor(int api, ClassVisitor cv) {
@@ -21,6 +23,9 @@ public class TestClassVisitor extends ClassVisitor {
     	System.out.println("Visiting class: " + name);
         System.out.println("Class Major Version: " + version);
         System.out.println("Super class: " + superName);
+//        if(!foundTearDown){
+//        	foundTearDown = name.equals("tearDown");
+//        }
         super.visit(version, access, name, signature, superName, interfaces);
     }
 
@@ -86,6 +91,11 @@ public class TestClassVisitor extends ClassVisitor {
     @Override
     public void visitEnd() {
         System.out.println("Method ends here");
+//        if(foundTearDown){
+//        	super
+//        }else{
+//        	
+//        }
         super.visitEnd();
     }
 

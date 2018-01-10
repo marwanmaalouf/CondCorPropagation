@@ -56,7 +56,7 @@ public class MyMethodVisitor extends MethodVisitor {
 	public void visitVarInsn(int opcode, int var) {
 		logInstruction();
 		super.visitVarInsn(opcode, var);
-		count++;
+		count++; // instruction number
 	}
 
 	// Label instruction not counted as an instruction 
@@ -229,37 +229,37 @@ public class MyMethodVisitor extends MethodVisitor {
 	// Support functions:
 
 	private void logInstruction(){
-		super.visitLdcInsn(count);
+		push(count);
 		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "logInstruction", 
 				Type.getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false);
 	}
 
 	private void logConditional(){
-		super.visitLdcInsn(count);
+		push(count);
 		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "logConditional", 
 				Type.getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false);
 	}
 
 	private void logModulo(){
-		super.visitLdcInsn(count);
+		push(count);
 		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "logModulo", 
 				Type.getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false);
 	}
 
 	private void logMultiply(){
-		super.visitLdcInsn(count);
+		push(count);
 		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "logMultiply", 
 				Type.getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false);
 	}
 
 	private void logDivide(){
-		super.visitLdcInsn(count);
+		push(count);
 		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "logDivide", 
 				Type.getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false);
 	}
 
 	private void logInvoke(){
-		super.visitLdcInsn(count);
+		push(count);
 		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "logInvoke", 
 				Type.getMethodDescriptor(Type.VOID_TYPE, Type.INT_TYPE), false);
 	}
@@ -268,5 +268,17 @@ public class MyMethodVisitor extends MethodVisitor {
 		super.visitLdcInsn(oracleIdentifier);
 		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "saveAndReset", 
 				Type.getMethodDescriptor(Type.VOID_TYPE, Type.getType(String.class)), false);
+	}
+	private final void push(final int value) {
+		//System.out.println(value);
+	    if(value >= -1 && value <= 5) {
+	        super.visitInsn(Opcodes.ICONST_0 + value);
+	    } else if(value == (byte)value) {
+	        super.visitIntInsn(Opcodes.BIPUSH, value);
+	    } else if(value == (short)value) {
+	        super.visitIntInsn(Opcodes.SIPUSH, value);
+	    } else {
+	        super.visitLdcInsn(value);
+	    }
 	}
 }
