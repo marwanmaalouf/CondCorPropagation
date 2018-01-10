@@ -18,6 +18,7 @@ public class TestMethodVisitor extends MethodVisitor {
 
 	protected final String methodIdentifier;
 	protected boolean isInstrumentable;
+	protected boolean isTearDown;
 	protected static final HashSet<String> reservedNames;
 	
 	static{
@@ -25,7 +26,7 @@ public class TestMethodVisitor extends MethodVisitor {
 		//reservedNames.add("<init>");
 		//reservedNames.add("<clinit>");
 		//reservedNames.add("setUp");
-		//reservedNames.add("tearDown");
+		reservedNames.add("tearDown");
 	}
 	
 	public TestMethodVisitor(int api, MethodVisitor mv, int access, String name, String desc, String signature, String className, String[] exceptions) {
@@ -36,14 +37,17 @@ public class TestMethodVisitor extends MethodVisitor {
 		}
 		methodIdentifier = tempClassName + "." + name + desc;
 		isInstrumentable = !reservedNames.contains(name);
-		
+		isTearDown = name.equals("tearDown");		
 	}
 
 	@Override
 	public void visitCode() {
 		super.visitCode();
 		
-		if(isInstrumentable){
+		if(isTearDown){
+			super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "afterTest", 
+					Type.getMethodDescriptor(Type.VOID_TYPE), false);
+		}else if(isInstrumentable){
 		// Call Profiler.beforeTest(String testIdentifier)
 		super.visitLdcInsn(methodIdentifier);
 		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "beforeTest", 
@@ -101,15 +105,15 @@ public class TestMethodVisitor extends MethodVisitor {
 
 	@Override
 	public void visitInsn(int opcode) {
-		switch(opcode){
-		case Opcodes.RETURN:
-			if(isInstrumentable){
-				// Call Profiler.afterTest()
-				super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "afterTest", 
-								Type.getMethodDescriptor(Type.VOID_TYPE), false);
-				}
-			break;	
-		}
+//		switch(opcode){
+//		case Opcodes.RETURN:
+//			if(isInstrumentable){
+//				// Call Profiler.afterTest()
+//				super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "afterTest", 
+//								Type.getMethodDescriptor(Type.VOID_TYPE), false);
+//				}
+//			break;	
+//		}
 		super.visitInsn(opcode);
 		
 	}

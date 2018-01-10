@@ -5,11 +5,11 @@ import org.objectweb.asm.*;
 public class TestClassVisitor extends ClassVisitor {
 
 	protected String className;
-//	protected boolean foundTearDown;
+	protected boolean foundTearDown;
 	
     public TestClassVisitor(int api) {
         super(api);
- //       foundTearDown = false;
+        foundTearDown = false;
     }
 
     public TestClassVisitor(int api, ClassVisitor cv) {
@@ -23,9 +23,6 @@ public class TestClassVisitor extends ClassVisitor {
     	System.out.println("Visiting class: " + name);
         System.out.println("Class Major Version: " + version);
         System.out.println("Super class: " + superName);
-//        if(!foundTearDown){
-//        	foundTearDown = name.equals("tearDown");
-//        }
         super.visit(version, access, name, signature, superName, interfaces);
     }
 
@@ -35,6 +32,7 @@ public class TestClassVisitor extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(int access, final String name, String desc, String signature, String[] exceptions) {
         System.out.println("Visiting method: " + name + desc);
+        foundTearDown = foundTearDown || name.equals("tearDown");
         MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
         return new TestMethodVisitor(api, mv, access, name, desc, signature, className, exceptions);
     }
@@ -90,12 +88,19 @@ public class TestClassVisitor extends ClassVisitor {
 
     @Override
     public void visitEnd() {
-        System.out.println("Method ends here");
-//        if(foundTearDown){
-//        	super
-//        }else{
-//        	
-//        }
+        System.out.println("Class ends here");
+        if(!foundTearDown){
+        	System.out.println("Adding tearDown Method");
+   			MethodVisitor mv = super.visitMethod(Opcodes.ACC_PUBLIC, "tearDown", 
+    					Type.getMethodDescriptor(Type.VOID_TYPE), null, null);
+   			mv.visitAnnotation("Lorg/junit/After;", true);
+    		mv.visitCode();
+    		mv.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "afterTest", 
+					Type.getMethodDescriptor(Type.VOID_TYPE), false);
+	    	mv.visitInsn(Opcodes.RETURN);
+    	    mv.visitMaxs(0, 0);
+    	    mv.visitEnd();
+        }
         super.visitEnd();
     }
 
