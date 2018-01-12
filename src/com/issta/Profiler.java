@@ -41,36 +41,42 @@ public class Profiler{
 	}
 
 	public static void logInstruction(int ins){
+		if(strongOracleLogInfoMap == null){return;}
 		for(String temp : strongOracleLogInfoMap.keySet()){
 			strongOracleLogInfoMap.get(temp).logInstruction(ins);
 		}
 	}
 
 	public static void logConditional(int ins){
+		if(strongOracleLogInfoMap == null){return;}
 		for(String temp : strongOracleLogInfoMap.keySet()){
 			strongOracleLogInfoMap.get(temp).logConsitionals(ins);
 		}
 	}
 
 	public static void logModulo(int ins){
+		if(strongOracleLogInfoMap == null){return;}
 		for(String temp : strongOracleLogInfoMap.keySet()){
 			strongOracleLogInfoMap.get(temp).logModulo(ins);
 		}
 	}
 
 	public static void logMultiply(int ins){
+		if(strongOracleLogInfoMap == null){return;}
 		for(String temp : strongOracleLogInfoMap.keySet()){
 			strongOracleLogInfoMap.get(temp).logMultiply(ins);
 		}
 	}
 
 	public static void logDivide(int ins){
+		if(strongOracleLogInfoMap == null){return;}
 		for(String temp : strongOracleLogInfoMap.keySet()){
 			strongOracleLogInfoMap.get(temp).logDivide(ins);
 		}
 	}
 
 	public static void logInvoke(int ins){
+		if(strongOracleLogInfoMap == null){return;}
 		for(String temp : strongOracleLogInfoMap.keySet()){
 			strongOracleLogInfoMap.get(temp).logInvoke(ins);
 		}
@@ -112,7 +118,7 @@ public class Profiler{
 		try {
 			fileWriter = new FileWriter(
 					DIRECTORY_PATH + 
-					runIdentifier + "_" + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()) + ".csv");
+					runIdentifier.replace(';', ' ').replace('/', '.') + "_" + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()) + ".csv");
 
 			//Write the CSV file header
 			fileWriter.append(COLUMNS);

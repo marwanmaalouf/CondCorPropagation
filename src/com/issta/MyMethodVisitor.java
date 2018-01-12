@@ -25,7 +25,7 @@ public class MyMethodVisitor extends MethodVisitor {
 
 	static{	         
 		StrongOraclePattern = ".*strong\\soracle.*";
-		pattern = Pattern.compile(StrongOraclePattern, Pattern.CASE_INSENSITIVE);
+		pattern = Pattern.compile(StrongOraclePattern, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 	}
 	
 	public MyMethodVisitor(int api, MethodVisitor mv, int access, String name, String desc, String signature, String className, String[] exceptions) {

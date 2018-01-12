@@ -2,6 +2,7 @@ package com.issta.test;
 
 
 import java.util.HashSet;
+import java.util.regex.Pattern;
 
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Attribute;
@@ -36,7 +37,7 @@ public class TestMethodVisitor extends MethodVisitor {
 			tempClassName = className.replace('/', '.');
 		}
 		methodIdentifier = tempClassName + "." + name + desc;
-		isInstrumentable = !reservedNames.contains(name);
+		isInstrumentable = !reservedNames.contains(name) && Pattern.matches("test.*", name);
 		isTearDown = name.equals("tearDown");		
 	}
 
