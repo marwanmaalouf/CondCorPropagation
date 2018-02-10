@@ -1,0 +1,104 @@
+,ORACLE,NUM_STAT,NUM_EXECSTAT,NUM_COND,NUM_EXECCOND,NUM_MODULO,NUM_EXECMODULO,NUM_MULT,NUM_EXECMULT,NUM_DIV,NUM_EXECDIV,NUM_INVOKE,NUM_EXECINVOKE,CLASS_STACK_SIZE,COUNT,TESTNAME,PROJECT,VERSION,FAIL
+0,Strong Oracle 41,23,23,2,2,0,0,1,1,2,2,1,1,0,1,org.apache.commons.math.stat.descriptive.moment.VarianceTest.testEvaluateArraySegmentWeighted,MATH,41,TRUE
+1,Strong Oracle 49 - 3,297,437,29,44,0,0,1,1,0,0,32,39,0,1,org.apache.commons.math.linear.SparseRealVectorTest.testConcurrentModification,MATH,49,TRUE
+2,Strong Oracle 53,52,55,4,4,0,0,0,0,0,0,8,8,0,2,org.apache.commons.math.complex.ComplexTest.testAddNaN,MATH,53,TRUE
+3,Strong Oracle 21 - 1,524,19551,51,2580,0,0,2,76,0,0,59,1802,0,5,org.apache.commons.math3.linear.RectangularCholeskyDecompositionTest.testMath789,MATH,21,TRUE
+4,Strong Oracle 21 - 2,650,19764,62,2601,0,0,4,79,0,0,61,1804,0,13,org.apache.commons.math3.linear.RectangularCholeskyDecompositionTest.testMath789,MATH,21,TRUE
+5,Strong Oracle 83,79,114,8,12,0,0,0,0,0,0,12,16,0,4,org.apache.commons.math.optimization.linear.SimplexSolverTest.testRestrictVariablesToNonNegative,MATH,83,FALSE
+6,Strong Oracle 29,74,74,6,6,0,0,0,0,0,0,6,6,0,1,org.apache.commons.math3.linear.SparseRealVectorTest.testEbeDivideMixedTypes,MATH,29,TRUE
+7,Strong Oracle 79,23,23,3,3,0,0,0,0,0,0,4,4,0,1,org.apache.commons.math.stat.clustering.KMeansPlusPlusClustererTest.testPerformClusterAnalysisDegenerate,MATH,79,TRUE
+8,Strong Oracle 35 - 1,6,6,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.genetics.ElitisticListPopulationTest.testChromosomeListConstructorTooLow,MATH,35,TRUE
+9,Strong Oracle 9,25,43,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.geometry.euclidean.threed.LineTest.testRevert,MATH,9,TRUE
+10,Strong Oracle 33,1717,173347,165,23117,0,0,2,369,2,68,291,16494,0,1,org.apache.commons.math3.optimization.linear.SimplexSolverTest.testMath293,MATH,33,FALSE
+11,Strong Oracle 34,6,6,0,0,0,0,0,0,0,0,2,2,0,1,org.apache.commons.math3.genetics.ListPopulationTest.testIterator,MATH,34,FALSE
+12,Strong Oracle 83,85,214,11,26,0,0,0,0,0,0,12,29,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.testMinimization,MATH,83,FALSE
+13,Strong Oracle 24,9,9,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.optimization.univariate.BrentOptimizerTest$2.value,MATH,24,FALSE
+14,Strong Oracle 27,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.fraction.FractionTest.testMath835,MATH,27,TRUE
+15,Strong Oracle 81,219,235,10,13,0,0,8,8,1,1,18,19,0,1,org.apache.commons.math.linear.EigenDecompositionImplTest.testDimension2,MATH,81,FALSE
+16,Strong Oracle 45,827,827,9,9,0,0,0,0,1,1,8,8,0,1,org.apache.commons.math.linear.OpenMapRealMatrixTest.testMath679,MATH,45,TRUE
+17,Strong Oracle 24,1177,49587,102,3273,0,0,42,2586,1,16,69,1837,0,7,org.apache.commons.math3.optimization.univariate.UnivariateMultiStartOptimizerTest.testSinMin,MATH,24,FALSE
+18,Strong Oracle 83,85,126,11,16,0,0,0,0,0,0,12,17,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.testTrivialModel,MATH,83,FALSE
+19,Strong Oracle 14 - 1,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.fitting.PolynomialFitterTest.testLargeSample,MATH,14,TRUE
+20,Strong Oracle 16,73,78,11,12,0,0,1,1,0,0,8,8,0,694,org.apache.commons.math3.util.FastMathTest.testMath905LargeNegative,MATH,16,TRUE
+21,Strong Oracle 24,16,16,0,0,0,0,0,0,0,0,2,2,0,1,org.apache.commons.math3.analysis.QuinticFunction.value,MATH,24,FALSE
+22,Strong Oracle 35 - 2,6,6,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.genetics.ElitisticListPopulationTest.testConstructorTooHigh,MATH,35,TRUE
+23,Strong Oracle 5,41,58,4,4,0,0,0,0,0,0,8,15,0,1,org.apache.commons.math3.complex.ComplexTest.testReciprocalZero,MATH,5,TRUE
+24,Strong Oracle 30,132,142,9,11,0,0,5,5,2,2,16,16,0,1,org.apache.commons.math3.stat.inference.MannWhitneyUTestTest.testBigDataSet,MATH,30,TRUE
+25,Strong Oracle 20,218,1147,24,77,0,0,2,14,0,0,28,114,0,1,org.apache.commons.math3.optimization.direct.CMAESOptimizerTest.testMath864,MATH,20,TRUE
+26,Strong Oracle 56,9,9,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math.util.MultidimensionalCounterTest.testIterationConsistency,MATH,56,TRUE
+27,Strong Oracle 42,280,386,34,50,0,0,1,2,0,0,30,37,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.testMath713NegativeVariable,MATH,42,TRUE
+28,Strong Oracle 16,72,77,11,12,0,0,1,1,0,0,8,8,0,694,org.apache.commons.math3.util.FastMathTest.testMath905LargePositive,MATH,16,TRUE
+29,Strong Oracle 57,377,22544,35,2059,0,0,4,406,1,12,55,2327,0,1,org.apache.commons.math.stat.clustering.KMeansPlusPlusClustererTest.dimension2,MATH,57,FALSE
+30,Strong Oracle 85,290,270377,19,30026,0,0,7,10008,3,10003,39,10057,0,1,org.apache.commons.math.distribution.NormalDistributionTest.testMath280,MATH,85,TRUE
+31,Strong Oracle 36 - 2,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math.fraction.BigFractionTest.testFloatValueForLargeNumeratorAndDenominator,MATH,36,TRUE
+32,Strong Oracle 81,118,121,6,7,0,0,2,2,0,0,14,15,0,1,org.apache.commons.math.linear.EigenDecompositionImplTest.testDimension1,MATH,81,FALSE
+33,Strong Oracle 33,642,6679,78,945,0,0,1,3,0,0,90,755,0,1,org.apache.commons.math3.optimization.linear.SimplexSolverTest.testMath781,MATH,33,TRUE
+34,Strong Oracle 57,322,205332,31,19116,0,0,2,5617,1,208,49,14606,0,975,org.apache.commons.math.stat.clustering.KMeansPlusPlusClustererTest.testCertainSpace,MATH,57,FALSE
+35,Strong Oracle 20,190,1124,17,71,0,0,2,14,0,0,27,113,0,1,org.apache.commons.math3.optimization.direct.CMAESOptimizerTest.testMath864,MATH,20,TRUE
+36,Strong Oracle 52 - 1,341,359,1,1,0,0,34,34,2,2,17,17,0,1,org.apache.commons.math.geometry.euclidean.threed.RotationTest.testIssue639,MATH,52,TRUE
+37,Strong Oracle 10,737,59530157,38,3620013,0,0,45,5080000,10,290000,12,650001,0,5,org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest.testTaylorAtan2,MATH,10,FALSE
+38,Strong Oracle 21 - 1,1449,9386,61,1111,0,0,8,44,2,6,65,760,0,1,org.apache.commons.math3.linear.RectangularCholeskyDecompositionTest.testDecomposition3x3,MATH,21,FALSE
+39,Strong Oracle 21 - 2,593,8262,56,1083,0,0,3,29,2,2,63,751,0,1,org.apache.commons.math3.linear.RectangularCholeskyDecompositionTest.testDecomposition3x3,MATH,21,FALSE
+40,Strong Oracle 35 - 1,6,6,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.genetics.ElitisticListPopulationTest.testChromosomeListConstructorTooHigh,MATH,35,TRUE
+41,Strong Oracle 83,79,114,8,12,0,0,0,0,0,0,12,16,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.testModelWithNoArtificialVars,MATH,83,FALSE
+42,Strong Oracle 11,841,1229,50,66,0,0,42,76,4,5,25,27,0,1,org.apache.commons.math3.distribution.MultivariateNormalDistributionTest.testUnivariateDistribution,MATH,11,TRUE
+43,Strong Oracle 33,1056,52321,115,6888,0,0,2,115,2,27,151,4986,0,1,org.apache.commons.math3.optimization.linear.SimplexSolverTest.testRestrictVariablesToNonNegative,MATH,33,FALSE
+44,Strong Oracle 33,1054,76539,111,10506,0,0,2,133,2,18,155,7646,0,1,org.apache.commons.math3.optimization.linear.SimplexSolverTest.testMath434PivotRowSelection2,MATH,33,FALSE
+45,Strong Oracle 35 - 2,6,6,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.genetics.ElitisticListPopulationTest.testConstructorTooLow,MATH,35,TRUE
+46,Strong Oracle 83,79,114,8,12,0,0,0,0,0,0,12,16,0,2,org.apache.commons.math.optimization.linear.SimplexSolverTest.testSolutionWithNegativeDecisionVariable,MATH,83,FALSE
+47,Strong Oracle 82,461,8991,52,972,0,0,2,59,2,13,68,919,0,11,org.apache.commons.math.optimization.linear.SimplexSolverTest.testMath288,MATH,82,TRUE
+48,Strong Oracle 90,17,17,1,1,0,0,0,0,0,0,3,3,0,1,org.apache.commons.math.stat.FrequencyTest.testAddNonComparable,MATH,90,TRUE
+49,Strong Oracle 84,109,127,4,5,0,0,0,0,0,0,21,25,0,1,org.apache.commons.math.optimization.direct.MultiDirectionalTest.testMath283,MATH,84,FALSE
+50,Strong Oracle 21 - 1,2465,INF,195,936312330,0,0,27,62426057,8,860415,201,673214641,0,13,org.apache.commons.math3.stat.regression.GLSMultipleLinearRegressionTest.testGLSEfficiency,MATH,21,FALSE
+51,Strong Oracle 21 - 2,2542,INF,199,936312345,0,0,28,62426059,8,860415,202,673214643,0,78,org.apache.commons.math3.stat.regression.GLSMultipleLinearRegressionTest.testGLSEfficiency,MATH,21,FALSE
+52,Strong Oracle 51 - 1,3531,6217,16,43,0,0,2,2,1,1,334,670,0,1,org.apache.commons.math.analysis.solvers.RegulaFalsiSolverTest.testIssue631,MATH,51,TRUE
+53,Strong Oracle 69,284,350,22,35,0,0,11,12,6,6,12,13,0,1,org.apache.commons.math.stat.correlation.PearsonsCorrelationTest.testPValueNearZero,MATH,69,TRUE
+54,Strong Oracle 26 - 1,30,30,4,4,0,0,0,0,0,0,2,2,0,1,org.apache.commons.math3.fraction.FractionTest.testIntegerOverflow,MATH,26,TRUE
+55,Strong Oracle 4 - 2,18,18,0,0,0,0,0,0,0,0,4,4,0,1,org.apache.commons.math3.geometry.euclidean.threed.SubLineTest.testIntersectionNotIntersecting,MATH,4,TRUE
+56,Strong Oracle 23,507,939,20,35,0,0,26,52,0,0,19,30,0,1,org.apache.commons.math3.optimization.univariate.BrentOptimizerTest.testKeepInitIfBest,MATH,23,TRUE
+57,Strong Oracle 10,1069,14230,47,1424,0,0,57,564,9,9,25,84,0,620,org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest.testAtan2,MATH,10,FALSE
+58,Strong Oracle 68,43,128,2,9,0,0,2,8,1,1,3,6,0,1,org.apache.commons.math.optimization.general.LevenbergMarquardtOptimizerTest$LinearProblem.value,MATH,68,TRUE
+59,Strong Oracle 22 - 1,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.distribution.UniformRealDistributionTest.testIsSupportUpperBoundInclusive,MATH,22,TRUE
+60,Strong Oracle 99,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math.util.MathUtilsTest.testLcm,MATH,99,TRUE
+61,Strong Oracle 8,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.distribution.DiscreteRealDistributionTest.testIssue942,MATH,8,TRUE
+62,Strong Oracle 24,188,255,17,25,0,0,3,4,0,0,15,20,0,1,org.apache.commons.math3.optimization.direct.PowellOptimizerTest$1.value,MATH,24,FALSE
+63,Strong Oracle 24,474,942,14,30,0,0,26,52,0,0,15,28,0,1,org.apache.commons.math3.optimization.univariate.BrentOptimizerTest.testMath855,MATH,24,TRUE
+64,Strong Oracle 10,10,10,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.analysis.differentiation.DerivativeStructureTest.testAtan2SpecialCases,MATH,10,TRUE
+65,Strong Oracle 88,71,122,3,8,0,0,1,3,0,0,8,10,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.testMath272,MATH,88,TRUE
+66,Strong Oracle 83,79,114,8,12,0,0,0,0,0,0,12,16,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.testSimplexSolver,MATH,83,FALSE
+67,Strong Oracle 13,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.optimization.fitting.PolynomialFitterTest.testLargeSample,MATH,13,TRUE
+68,Strong Oracle 61,2899,4971,0,0,0,0,0,0,0,0,266,525,0,1,org.apache.commons.math.distribution.PoissonDistributionTest.testMean,MATH,61,TRUE
+69,Strong Oracle 72 - 2,8,8,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math.analysis.solvers.BrentSolverTest.testRootEndPoints,MATH,72,TRUE
+70,Strong Oracle 81,13,13,1,1,0,0,0,0,0,0,1,1,0,2,org.apache.commons.math.linear.EigenDecompositionImplTest.testMath308,MATH,81,TRUE
+71,Strong Oracle 1 - 2,126,192,4,13,0,0,0,0,0,0,23,30,0,1,org.apache.commons.math3.fraction.BigFractionTest.testDigitLimitConstructor,MATH,1,TRUE
+72,Strong Oracle 25,491,11815,17,337,0,0,30,871,5,34,17,279,0,1,org.apache.commons.math3.optimization.fitting.HarmonicFitterTest.testMath844,MATH,25,TRUE
+73,Strong Oracle 99,8,8,0,0,0,0,0,0,0,0,3,3,0,1,org.apache.commons.math.util.MathUtilsTest.testGcd,MATH,99,TRUE
+74,Strong Oracle 47 - 1,57,74,6,6,0,0,0,0,0,0,10,17,0,1,org.apache.commons.math.complex.ComplexTest.testDivideZero,MATH,47,TRUE
+75,Strong Oracle 22 - 2,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math3.distribution.FDistributionTest.testIsSupportLowerBoundInclusive,MATH,22,TRUE
+76,Strong Oracle 63,20,20,6,6,0,0,0,0,0,0,3,3,0,1,org.apache.commons.math.util.MathUtilsTest.testArrayEquals,MATH,63,TRUE
+77,Strong Oracle 47 - 1,175,250,22,32,0,0,3,3,3,3,23,30,0,2,org.apache.commons.math.complex.ComplexTest.testAtanI,MATH,47,TRUE
+78,Strong Oracle 21 - 1,468,19070,42,2386,0,0,8,177,2,6,24,1356,0,2,org.apache.commons.math3.random.CorrelatedRandomVectorGeneratorTest.testMath226,MATH,21,FALSE
+79,Strong Oracle 21 - 2,465,18914,42,2378,0,0,8,168,2,4,23,1351,0,4,org.apache.commons.math3.random.CorrelatedRandomVectorGeneratorTest.testMath226,MATH,21,FALSE
+80,Strong Oracle 15,647,921,31,40,0,0,37,61,3,3,13,13,0,1,org.apache.commons.math3.util.FastMathTest.testMath904,MATH,15,TRUE
+81,Strong Oracle 1 - 1,126,192,4,13,0,0,0,0,0,0,23,30,0,1,org.apache.commons.math3.fraction.FractionTest.testDigitLimitConstructor,MATH,1,TRUE
+82,Strong Oracle 28 - 2,3963,102003,61,12918,0,0,1,280,1,40,388,10184,0,43,org.apache.commons.math3.optimization.linear.SimplexSolverTest.testMath828Cycle,MATH,28,TRUE
+83,Strong Oracle 28 - 1,4002,102062,65,12926,0,0,1,280,2,41,396,10196,0,79,org.apache.commons.math3.optimization.linear.SimplexSolverTest.testMath828Cycle,MATH,28,TRUE
+84,Strong Oracle 69,736,34589,55,2919,1,181,33,2033,20,1539,46,1515,0,1,org.apache.commons.math.stat.correlation.SpearmansRankCorrelationTest.testPValueNearZero,MATH,69,TRUE
+85,Strong Oracle 2,140,143,11,11,0,0,7,7,3,3,15,16,0,1,org.apache.commons.math3.distribution.HypergeometricDistributionTest.testMath1021,MATH,2,TRUE
+86,Strong Oracle 91,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math.fraction.FractionTest.testCompareTo,MATH,91,TRUE
+87,Strong Oracle 83,79,114,8,12,0,0,0,0,0,0,12,16,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.testSingleVariableAndConstraint,MATH,83,FALSE
+88,Strong Oracle 36 - 1,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math.fraction.BigFractionTest.testDoubleValueForLargeNumeratorAndDenominator,MATH,36,TRUE
+89,Strong Oracle 3,87,90,2,3,0,0,7,7,0,0,1,1,0,1,org.apache.commons.math3.util.MathArraysTest.testLinearCombinationWithSingleElementArray,MATH,3,TRUE
+90,Strong Oracle 59,4,4,0,0,0,0,0,0,0,0,1,1,0,1,org.apache.commons.math.util.FastMathTest.testMinMaxFloat,MATH,59,TRUE
+91,Strong Oracle 83,85,214,11,26,0,0,0,0,0,0,12,29,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.equationFromString,MATH,83,FALSE
+92,Strong Oracle 83,79,114,8,12,0,0,0,0,0,0,12,16,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.testMath286,MATH,83,TRUE
+93,Strong Oracle 4 - 1,19,19,0,0,0,0,0,0,0,0,4,4,0,1,org.apache.commons.math3.geometry.euclidean.twod.SubLineTest.testIntersectionParallel,MATH,4,TRUE
+94,Strong Oracle 83,79,114,8,12,0,0,0,0,0,0,12,16,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.testEpsilon,MATH,83,TRUE
+95,Strong Oracle 75,120,299,10,38,0,0,0,0,1,1,27,73,0,1,org.apache.commons.math.stat.FrequencyTest.testPcts,MATH,75,TRUE
+96,Strong Oracle 24,4507,13196,76,480,0,0,42,377,1,6,382,918,0,2,org.apache.commons.math3.optimization.univariate.BrentOptimizerTest.testSinMin,MATH,24,FALSE
+97,Strong Oracle 28 - 1,773,97825,92,13006,0,0,2,279,3,62,116,9782,0,1,org.apache.commons.math3.optimization.linear.SimplexSolverTest.testMath288,MATH,28,FALSE
+98,Strong Oracle 21 - 1,733,20446,62,2635,0,0,8,99,2,8,65,1816,0,1,org.apache.commons.math3.linear.RectangularCholeskyDecompositionTest.testFullRank,MATH,21,TRUE
+99,Strong Oracle 21 - 2,601,19574,57,2571,0,0,3,66,2,2,63,1798,0,4,org.apache.commons.math3.linear.RectangularCholeskyDecompositionTest.testFullRank,MATH,21,TRUE
+100,Strong Oracle 24,192,254,19,26,0,0,3,4,0,0,15,20,0,1,org.apache.commons.math3.optimization.direct.PowellOptimizerTest$2.value,MATH,24,FALSE
+101,Strong Oracle 82,117,117,14,14,0,0,0,0,1,1,18,18,0,1,org.apache.commons.math.optimization.linear.SimplexSolverTest.testUnboundedSolution,MATH,82,FALSE
+102,Strong Oracle 81,184,424,9,29,0,0,4,8,0,0,19,42,0,1,org.apache.commons.math.linear.EigenDecompositionImplTest.createDiagonalMatrix,MATH,81,FALSE

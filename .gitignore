@@ -1,2 +1,5 @@
 instrumented/ 
 out/ 
+Analysis/*.txt
+Analysis/*.png
+Analysis/Data/
