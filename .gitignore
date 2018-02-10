@@ -1,13 +1,2 @@
-## Ignore temporary files, build results
-
-
-# Build results
-
-*.class
-*.jar
-SourceCodeToTest/
-jar/
-instrumented/
-[Oo]ut/
-*.csv
-pushChanges.bat
+instrumented/ 
+out/ 
