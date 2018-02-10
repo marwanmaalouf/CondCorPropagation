@@ -1,8 +1,9 @@
 package com.issta;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
-public class OracleInfo{
+public class StrongOracleInfo{
 	// Statements
 	HashSet<Integer> instructionSet;
 	int numExecStatements;
@@ -35,7 +36,7 @@ public class OracleInfo{
 	
 	
 	
-	private OracleInfo(String identifier){
+	private StrongOracleInfo(String identifier){
 		this.strongOracleIdentifier = identifier;
 		
 		this.instructionSet = new HashSet<>();
@@ -89,7 +90,7 @@ public class OracleInfo{
 		this.numExecInvoke++;
 	}		
 	
-	public static OracleInfo createOracleInfo(String idenitifier){
-		return new OracleInfo(idenitifier);
+	public static StrongOracleInfo createStrongOracleInfo(String idenitifier){
+		return new StrongOracleInfo(idenitifier);
 	}
 }

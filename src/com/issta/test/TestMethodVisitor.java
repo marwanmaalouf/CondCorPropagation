@@ -9,7 +9,7 @@ import org.objectweb.asm.Attribute;
 import org.objectweb.asm.Handle;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.Opcodes;
+import static org.objectweb.asm.Opcodes.*;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.TypePath;
 
@@ -17,42 +17,85 @@ import org.objectweb.asm.TypePath;
 
 public class TestMethodVisitor extends MethodVisitor {
 
-	protected final String methodIdentifier;
-	protected boolean isInstrumentable;
+	static final String CLASS_PROFILER = "com/issta/Profiler";
+	static final String CLASS_JUNIT_RULE_TESTNAME = "org/junit/rules/TestName";
+	static final String CLASS_JAVA_LANG_STRINGBUILDER = "java/lang/StringBuilder";
+	static final String CLASS_JAVA_LANG_STRING = "java/lang/String";
+	static final String CLASS_JUNIT_FRAMEWORK_TESTCASE = "junit/framework/TestCase";
+	
+	static final String ASMCLASS_JUNIT_RULE_TESTNAME = "Lorg/junit/rules/TestName;";
+	static final String ASMCLASS_JAVA_LANG_STRINGBUILDER = "Ljava/lang/StringBuilder;";
+	static final String ASMCLASS_JAVA_LANG_STRING = "Ljava/lang/String;";
+
+
+
+
+	protected final TestClassVisitor cv;
+	protected final String className;
+	protected boolean isTest;
 	protected boolean isTearDown;
-	protected static final HashSet<String> reservedNames;
+	protected boolean isSetUp;
+	protected boolean isConstructor;
+	protected boolean seenSuperConstructor;
+
 	
-	static{
-		reservedNames = new HashSet<String>();
-		//reservedNames.add("<init>");
-		//reservedNames.add("<clinit>");
-		//reservedNames.add("setUp");
-		reservedNames.add("tearDown");
-	}
-	
-	public TestMethodVisitor(int api, MethodVisitor mv, int access, String name, String desc, String signature, String className, String[] exceptions) {
+	public TestMethodVisitor(int api, MethodVisitor mv, int access, String name, String desc, String signature, String className, String[] exceptions,
+		TestClassVisitor cv) {
 		super(api, mv);
-		String tempClassName = className;
-		if(className.contains("/")){
-			tempClassName = className.replace('/', '.');
+
+		
+		this.cv = cv;
+		this.className = className;
+		
+		this.seenSuperConstructor = false;
+		this.isConstructor = name.equals("<init>");
+
+		this.isSetUp = name.equals("setUp");// handles Junit 3.x
+		if(isSetUp){
+			cv.foundSetUp = true;
 		}
-		methodIdentifier = tempClassName + "." + name + desc;
-		isInstrumentable = !reservedNames.contains(name) && Pattern.matches("test.*", name);
-		isTearDown = name.equals("tearDown");		
+
+		this.isTearDown = name.equals("tearDown"); // handles Junit 3.x
+		if(isTearDown){
+			cv.foundTearDown = true;
+		}
+
+		this.isTest = false; // only works for junit 4.X
 	}
 
 	@Override
 	public void visitCode() {
 		super.visitCode();
 		
-		if(isTearDown){
-			super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "afterTest", 
-					Type.getMethodDescriptor(Type.VOID_TYPE), false);
-		}else if(isInstrumentable){
-		// Call Profiler.beforeTest(String testIdentifier)
-		super.visitLdcInsn(methodIdentifier);
-		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "beforeTest", 
-				Type.getMethodDescriptor(Type.VOID_TYPE, Type.getType(String.class)), false);
+
+		 if(isTearDown){
+		 	super.visitMethodInsn(INVOKESTATIC, CLASS_PROFILER, "afterTest", 
+		 			Type.getMethodDescriptor(Type.VOID_TYPE), false);
+		 }else if(isSetUp){
+		 	super.visitTypeInsn(NEW, CLASS_JAVA_LANG_STRINGBUILDER);
+		 	super.visitInsn(DUP);
+		 	super.visitMethodInsn(INVOKESPECIAL, CLASS_JAVA_LANG_STRINGBUILDER, "<init>", "()V", false);
+		 	super.visitLdcInsn(className.replace('/', '.') + ".");
+		 	super.visitMethodInsn(INVOKEVIRTUAL, CLASS_JAVA_LANG_STRINGBUILDER, "append", 
+		 			"(" + ASMCLASS_JAVA_LANG_STRING + ")" + ASMCLASS_JAVA_LANG_STRINGBUILDER, false);
+		 	super.visitVarInsn(ALOAD, 0);
+
+			if(cv.isJunit3){
+		 		super.visitMethodInsn(INVOKEVIRTUAL, CLASS_JUNIT_FRAMEWORK_TESTCASE ,"getName", 
+					"()" + ASMCLASS_JAVA_LANG_STRING, false);
+		 	}else{
+		 	super.visitFieldInsn(GETFIELD, className, cv.testFieldName, ASMCLASS_JUNIT_RULE_TESTNAME);
+		 	super.visitMethodInsn(INVOKEVIRTUAL, CLASS_JUNIT_RULE_TESTNAME, "getMethodName", 
+		 			"()" + ASMCLASS_JAVA_LANG_STRING, false);
+		 	}
+
+		 	super.visitMethodInsn(INVOKEVIRTUAL, CLASS_JAVA_LANG_STRINGBUILDER, "append", 
+		 			"(" + ASMCLASS_JAVA_LANG_STRING + ")" + ASMCLASS_JAVA_LANG_STRINGBUILDER, false);
+		// 	// TODO: do we need the signature?? send it later to the profiler...
+		 	super.visitMethodInsn(INVOKEVIRTUAL, CLASS_JAVA_LANG_STRINGBUILDER, "toString",
+		 			"()" + ASMCLASS_JAVA_LANG_STRING, false);
+		 	super.visitMethodInsn(INVOKESTATIC, CLASS_PROFILER, "beforeTest", 
+		 		"(" + ASMCLASS_JAVA_LANG_STRING + ")V", false);
 		}
 	}
 
@@ -80,6 +123,18 @@ public class TestMethodVisitor extends MethodVisitor {
 	@Override 
 	public void visitMethodInsn(int opcode, String owner, String name, String desc, boolean itf){    
 		super.visitMethodInsn(opcode, owner, name, desc, itf);
+		if(opcode == INVOKESPECIAL && isConstructor && !seenSuperConstructor){
+			seenSuperConstructor = true;
+			if(!cv.isJunit3){
+				super.visitVarInsn(ALOAD, 0);
+				super.visitTypeInsn(NEW, CLASS_JUNIT_RULE_TESTNAME);
+				super.visitInsn(DUP);
+				super.visitMethodInsn(INVOKESPECIAL, CLASS_JUNIT_RULE_TESTNAME, 
+					"<init>", "()V", false);
+				super.visitFieldInsn(PUTFIELD, className, cv.testFieldName, 
+					ASMCLASS_JUNIT_RULE_TESTNAME);
+			}
+		}
 	}
 
 
@@ -106,17 +161,7 @@ public class TestMethodVisitor extends MethodVisitor {
 
 	@Override
 	public void visitInsn(int opcode) {
-//		switch(opcode){
-//		case Opcodes.RETURN:
-//			if(isInstrumentable){
-//				// Call Profiler.afterTest()
-//				super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "afterTest", 
-//								Type.getMethodDescriptor(Type.VOID_TYPE), false);
-//				}
-//			break;	
-//		}
-		super.visitInsn(opcode);
-		
+		super.visitInsn(opcode);		
 	}
 
 	@Override
@@ -141,6 +186,18 @@ public class TestMethodVisitor extends MethodVisitor {
 
 	@Override 
 	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+		if(desc.equals("Lorg/junit/Test;")){
+			isTest = true;
+		}
+		if(desc.equals("Lorg/junit/After;")){
+			isTearDown = true;
+			cv.foundTearDown = true;
+		}
+		if(desc.equals("Lorg/junit/Before;")){
+			isSetUp = true;
+			cv.foundSetUp = true;
+		}
+		//System.out.println("Annotation: " + desc);
 		return super.visitAnnotation(desc, visible);
 	}
 	

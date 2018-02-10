@@ -28,109 +28,107 @@ import java.util.HashMap;
 
 
 public class Profiler{
-	private static HashMap<String, OracleInfo> oracleLogInfoMap;
-	private static HashMap<String, Integer> oracleCount;
-
+	private static HashMap<String, StrongOracleInfo> strongOracleLogInfoMap;
+	private static HashMap<String, Integer> strongOracleCount;
 	private static final String DIRECTORY_PATH;
 
 	// Run identifier
 	private static String runIdentifier;
 
 	static{
-		DIRECTORY_PATH = Main._DIRECTORY_OUTPUT + "profile//";
+		DIRECTORY_PATH = "/home/WIN2K/mki06/Desktop/DONOTDELETE/instrumented/profile/";
+		//beforeTest("testRun");
 	}
 
 	public static void logInstruction(int ins){
-		if(oracleLogInfoMap != null){
-			for(String temp : oracleLogInfoMap.keySet()){
-				oracleLogInfoMap.get(temp).logInstruction(ins);
-			}
+		if(strongOracleLogInfoMap == null){return;}
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logInstruction(ins);
 		}
 	}
 
 	public static void logConditional(int ins){
-		if(oracleLogInfoMap != null){
-			for(String temp : oracleLogInfoMap.keySet()){
-				oracleLogInfoMap.get(temp).logConsitionals(ins);
-			}
+		if(strongOracleLogInfoMap == null){return;}
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logConsitionals(ins);
 		}
 	}
 
 	public static void logModulo(int ins){
-		if(oracleLogInfoMap != null){
-			for(String temp : oracleLogInfoMap.keySet()){
-				oracleLogInfoMap.get(temp).logModulo(ins);
-			}
+		if(strongOracleLogInfoMap == null){return;}
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logModulo(ins);
 		}
 	}
 
 	public static void logMultiply(int ins){
-		if(oracleLogInfoMap != null){
-			for(String temp : oracleLogInfoMap.keySet()){
-				oracleLogInfoMap.get(temp).logMultiply(ins);
-			}
+		if(strongOracleLogInfoMap == null){return;}
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logMultiply(ins);
 		}
 	}
 
 	public static void logDivide(int ins){
-		if(oracleLogInfoMap != null){
-			for(String temp : oracleLogInfoMap.keySet()){
-				oracleLogInfoMap.get(temp).logDivide(ins);
-			}
+		if(strongOracleLogInfoMap == null){return;}
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logDivide(ins);
 		}
 	}
 
 	public static void logInvoke(int ins){
-		if(oracleLogInfoMap != null){
-			for(String temp : oracleLogInfoMap.keySet()){
-				oracleLogInfoMap.get(temp).logInvoke(ins);
-			}
+		if(strongOracleLogInfoMap == null){return;}
+		for(String temp : strongOracleLogInfoMap.keySet()){
+			strongOracleLogInfoMap.get(temp).logInvoke(ins);
 		}
 	}
 
-	public static void logOracle(String identifier){
-		System.out.println("##################################################Oracle identified: " + identifier);
-		OracleInfo oracle = OracleInfo.createOracleInfo(identifier);
-		oracleLogInfoMap.put(identifier, oracle);
-
-		if(oracleCount.containsKey(identifier)){
-			oracleCount.put(identifier, oracleCount.get(identifier) + 1);
+	public static void saveAndReset(String identifier){
+		//System.out.println("##################################################Strong oracle identified: " + identifier);
+		StrongOracleInfo strongOracle = StrongOracleInfo.createStrongOracleInfo(identifier);
+		strongOracleLogInfoMap.put(identifier, strongOracle);
+				
+		if(strongOracleCount.containsKey(identifier)){
+			strongOracleCount.put(identifier, strongOracleCount.get(identifier) + 1);
 		}else{
-			oracleCount.put(identifier, 1);
+			strongOracleCount.put(identifier, 1);
 		}
 	}
 
 	public static void beforeTest(String testIdentifier){
-		oracleLogInfoMap = new HashMap<>();
-		oracleCount = new HashMap<>();		
+		//System.out.println("\nbefore called for " + testIdentifier);
+		if(strongOracleLogInfoMap != null || strongOracleCount != null){
+		 	return;
+		}
+		strongOracleLogInfoMap = new HashMap<>();
+		strongOracleCount = new HashMap<>();
 		runIdentifier = testIdentifier;
 	}
 
 	private final static String COMMA_DELIMITER = ",";
 	private final static String NEW_LINE_SEPARATOR= "\n";	
-	private final static String COLUMNS = 
-			"ORACLE,"
-					+ "NUM_STAT,"
-					+ "NUM_EXECSTAT,"
-					+ "NUM_COND,"
-					+ "NUM_EXECCOND,"
-					+ "NUM_MODULO,NUM_EXECMODULO,"
-					+ "NUM_MULT,NUM_EXECMULT,"
-					+ "NUM_DIV,NUM_EXECDIV,"
-					+ "NUM_INVOKE,NUM_EXECINVOKE,"
-					+ "CLASS_STACK_SIZE,"
-					+ "COUNT";
+	private final static String COLUMNS = "ORACLE,NUM_STAT,NUM_EXECSTAT,NUM_COND,NUM_EXECCOND,"
+			+ "NUM_MODULO,NUM_EXECMODULO,"
+			+ "NUM_MULT,NUM_EXECMULT,"
+			+ "NUM_DIV,NUM_EXECDIV,"
+			+ "NUM_INVOKE,NUM_EXECINVOKE,"
+			+ "CLASS_STACK_SIZE,"
+			+ "COUNT";
 	public static void afterTest(){	
 		// print to csv file
 		FileWriter fileWriter = null;
-		if(oracleLogInfoMap.isEmpty()){
+		if(strongOracleLogInfoMap.isEmpty()){
+			strongOracleLogInfoMap = null;
+			strongOracleCount = null;
 			return;
 		}
-
+		
 		try {
-			fileWriter = new FileWriter(
-					DIRECTORY_PATH + 
-					runIdentifier.replace(';', ' ').replace('/', '.') + "_" + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()) + ".csv");
+			String fileName = DIRECTORY_PATH +
+                                        runIdentifier.replace(';', ' ').replace('/', '.');
+			if (fileName.length() > 250) {
+				fileName = fileName.substring(0,250);
+			}
+			fileWriter = new FileWriter(fileName + ".csv");
 
 			//Write the CSV file header
 			fileWriter.append(COLUMNS);
@@ -139,12 +137,12 @@ public class Profiler{
 			fileWriter.append(NEW_LINE_SEPARATOR);
 
 			//Write a new student object list to the CSV file
-			OracleInfo temp = null;
-			for (String key : oracleLogInfoMap.keySet()) {
-				temp = oracleLogInfoMap.get(key);
+			StrongOracleInfo temp = null;
+			for (String key : strongOracleLogInfoMap.keySet()) {
+				temp = strongOracleLogInfoMap.get(key);
 				fileWriter.append(key);
 				fileWriter.append(COMMA_DELIMITER);
-
+				
 				fileWriter.append(((Integer)temp.instructionSet.size()).toString());
 				fileWriter.append(COMMA_DELIMITER);
 				fileWriter.append(((Integer)temp.numExecStatements).toString());
@@ -178,22 +176,27 @@ public class Profiler{
 				fileWriter.append(((Integer)temp.callStackSize).toString());
 				fileWriter.append(COMMA_DELIMITER);
 
-				fileWriter.append(((Integer)oracleCount.get(key)).toString());
+				fileWriter.append(((Integer)strongOracleCount.get(key)).toString());
 				fileWriter.append(NEW_LINE_SEPARATOR);
 			}
-			System.out.println("Output: " + DIRECTORY_PATH + 
-					runIdentifier + "_" + new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()) + ".csv");
+			//System.out.println("Output: " + DIRECTORY_PATH + 
+			//		runIdentifier + ".csv");
 		} catch (Exception e) {
-			System.out.println("Error in CsvFileWriter in '" + runIdentifier +"'");
+			System.err.println("Error in CsvFileWriter in '" + runIdentifier +"'");
 			e.printStackTrace();
 		} finally {
 			try {
 				fileWriter.flush();
 				fileWriter.close();
 			} catch (IOException e) {
-				System.out.println("Error while flushing/closing fileWriter in '" + runIdentifier +"'");
+				System.err.println("Error while flushing/closing fileWriter in '" + runIdentifier +"'");
 				e.printStackTrace();
 			}
+
+
+			// MM: 
+			strongOracleLogInfoMap = null;
+			strongOracleCount = null;
 		}
 	}
 }

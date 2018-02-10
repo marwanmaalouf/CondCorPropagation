@@ -19,17 +19,17 @@ public class Main {
 
 	private static final String _JAR = ".jar";
 	private static final String _CLASS = ".class";
-	public static final String _DIRECTORY_OUTPUT = "instrumented//";
-	private static final String _DIRECTORY_JAR = _DIRECTORY_OUTPUT + "jar//";
-	private static final String _DIRECTORY_CLASS = _DIRECTORY_OUTPUT + "classes//";
+	public static final String _DIRECTORY_OUTPUT = "instrumented/";
+	private static final String _DIRECTORY_JAR = _DIRECTORY_OUTPUT + "jar/";
+	private static final String _DIRECTORY_CLASS = _DIRECTORY_OUTPUT + "classes/";
 	private static String _directoryPath;
 
 	protected static void instrumentJarFile(String jarFile, String outputFileName){
-		System.out.println("Loading Jar file: " + jarFile);
+		//System.out.println("Loading Jar file: " + jarFile);
 
 		JarFile jis;
 		try {
-			System.out.println(jarFile);
+			//System.out.println(jarFile);
 			jis = new JarFile(jarFile);
 			JarOutputStream jos = new JarOutputStream(new FileOutputStream(outputFileName));
 			Enumeration<JarEntry> entries = jis.entries();
@@ -40,7 +40,7 @@ public class Main {
 				byte [] bytes = null;
 				String entryName = inputJarEntry.toString();
 
-				System.out.println("Loading " + entryName);
+				//System.out.println("Loading " + entryName);
 
 				if(entryName.endsWith(_CLASS)){
 					InputStream classFileInputStream;
@@ -51,7 +51,7 @@ public class Main {
 					bytes = cw.toByteArray();
 					}catch(RuntimeException e){
 						e.printStackTrace();
-						System.out.println("Aborting instrumentation, copying file as is");
+						System.err.println("Aborting instrumentation, copying file as is");
 						classFileInputStream = jis.getInputStream(inputJarEntry);
 						int len = classFileInputStream.available();
 						bytes = new byte[len];
@@ -96,13 +96,13 @@ public class Main {
 			}
 			jos.close();
 		} catch (IOException e) {
-			System.out.println("Failed to instrument " + jarFile);
+			System.err.println("Failed to instrument " + jarFile);
 			e.printStackTrace();
 		}
 	}
 
 	private static ClassWriter instrumentClassFile(InputStream in, String className) throws IOException {
-		System.out.println("Starting instrumentation of " + className);
+		//System.out.println("Starting instrumentation of " + className);
 		ClassReader classReader = new ClassReader(in);
 		ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
@@ -114,7 +114,7 @@ public class Main {
 
 	private static void instrumentClassFile(String classFile, String outputFileName) {
 		try {
-			System.out.println("Loading " + classFile);
+			//System.out.println("Loading " + classFile);
 			InputStream in = new FileInputStream(classFile);
 			ClassWriter classWriter = instrumentClassFile(in, classFile);
 			
@@ -122,7 +122,7 @@ public class Main {
 			final DataOutputStream dout = new DataOutputStream(new FileOutputStream(outputFileName));
 			dout.write(classWriter.toByteArray());
 		} catch (IOException e) {
-			System.out.println("Failed to instrument " + classFile);
+			System.err.println("Failed to instrument " + classFile);
 			e.printStackTrace();
 		}	
 	}
@@ -131,11 +131,11 @@ public class Main {
 	public static void main(String [] args){
 		MyMethodVisitor.count = 0;
 		if (args.length == 0) {
-			System.out.println("Provide a path to the class file as argument");
+			System.err.println("Provide a path to the class file as argument");
 			return;
 		}
 		
-		_directoryPath = Paths.get("").toAbsolutePath().toString() + "\\";
+		_directoryPath = Paths.get("").toAbsolutePath().toString() + "/";
 		
 		
 		for(int i = 0; i < args.length; i++){
@@ -144,21 +144,24 @@ public class Main {
 			String outputFilePath; 
 			
 			
-			System.out.println("File found: " + filePath);
+			//System.out.println("File found: " + filePath);
 			
 			if(filePath.substring(filePath.length() - 4).equals(_JAR)){
-				outputFilePath = _directoryPath + _DIRECTORY_JAR + temp[temp.length - 1];
+			//	outputFilePath = _directoryPath + _DIRECTORY_JAR + temp[temp.length - 1];
+				outputFilePath = _directoryPath + temp[temp.length - 1].split(_JAR)[0] 
+				 + "_instrumented.jar";
 				instrumentJarFile(filePath, outputFilePath);
 			}else if(filePath.substring(filePath.length() - 6).equals(_CLASS)){
-				outputFilePath = _directoryPath + _DIRECTORY_CLASS + temp[temp.length - 1];
+			//	outputFilePath = _directoryPath + _DIRECTORY_CLASS + temp[temp.length - 1];
+			    outputFilePath = _directoryPath + temp[temp.length - 1];
 				instrumentClassFile(filePath, outputFilePath);
 			}else{
 				outputFilePath = _directoryPath + _DIRECTORY_OUTPUT + temp[temp.length - 1]; 
 			}
 			
-			System.out.println("Output written to " + outputFilePath);
-			System.out.println();
-			System.out.println();
+			//System.out.println("Output written to " + outputFilePath);
+			//System.out.println();
+			//System.out.println();
 		}
 	}
 	

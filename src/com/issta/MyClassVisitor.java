@@ -18,9 +18,9 @@ public class MyClassVisitor extends ClassVisitor {
     public void visit(int version, int access, String name,
                       String signature, String superName, String[] interfaces) {
     	className = name;
-    	System.out.println("Visiting class: " + name);
-        System.out.println("Class Major Version: " + version);
-        System.out.println("Super class: " + superName);
+    	//System.out.println("Visiting class: " + name);
+        //System.out.println("Class Major Version: " + version);
+       // System.out.println("Super class: " + superName);
         super.visit(version, access, name, signature, superName, interfaces);
     }
 
@@ -29,8 +29,14 @@ public class MyClassVisitor extends ClassVisitor {
      */
     @Override
     public MethodVisitor visitMethod(int access, final String name, String desc, String signature, String[] exceptions) {
-        System.out.println("Visiting method: " + name + desc);
+        //System.out.println("Visiting method: " + name + desc);
         MethodVisitor mv = super.visitMethod(access, name, desc, signature, exceptions);
+        if(name.equals("<clinit>") && className.equals("org/apache/commons/math/analysis/interpolation/TricubicSplineInterpolatingFunction")
+        || name.equals("<clinit>") && className.equals("org/apache/commons/math/util/FastMathLiteralArrays")
+        || name.equals("<clinit>") && className.equals("org/apache/commons/math3/util/FastMathLiteralArrays")
+        || name.equals("<clinit>") && className.equals("org/apache/commons/math3/analysis/interpolation/TricubicSplineInterpolatingFunction")){
+            return mv;
+        }
         return new MyMethodVisitor(api, mv, access, name, desc, signature, className, exceptions);
     }
 
@@ -39,7 +45,7 @@ public class MyClassVisitor extends ClassVisitor {
      */
     @Override
     public void visitOuterClass(String owner, String name, String desc) {
-        System.out.println("Outer class: " + owner);
+        //System.out.println("Outer class: " + owner);
         super.visitOuterClass(owner, name, desc);
     }
 
@@ -49,7 +55,7 @@ public class MyClassVisitor extends ClassVisitor {
     @Override
     public AnnotationVisitor visitAnnotation(String desc,
                                              boolean visible) {
-        System.out.println("Annotation: " + desc);
+        //System.out.println("Annotation: " + desc);
         return super.visitAnnotation(desc, visible);
     }
 
@@ -58,7 +64,7 @@ public class MyClassVisitor extends ClassVisitor {
      */
     @Override
     public void visitAttribute(Attribute attr) {
-        System.out.println("Class Attribute: " + attr.type);
+        //System.out.println("Class Attribute: " + attr.type);
         super.visitAttribute(attr);
     }
 
@@ -68,7 +74,7 @@ public class MyClassVisitor extends ClassVisitor {
     @Override
     public void visitInnerClass(String name, String outerName,
                                 String innerName, int access) {
-        System.out.println("Inner Class: " + innerName + " defined in " + outerName);
+       // System.out.println("Inner Class: " + innerName + " defined in " + outerName);
         super.visitInnerClass(name, outerName, innerName, access);
     }
 
@@ -78,14 +84,14 @@ public class MyClassVisitor extends ClassVisitor {
     @Override
     public FieldVisitor visitField(int access, String name,
                                    String desc, String signature, Object value) {
-        System.out.println("Field: " + name + " " + desc + " value:" + value);
+        //System.out.println("Field: " + name + " " + desc + " value:" + value);
         return super.visitField(access, name, desc, signature, value);
     }
 
 
     @Override
     public void visitEnd() {
-        System.out.println("Method ends here");
+        //System.out.println("Class ends here");
         super.visitEnd();
     }
 
@@ -94,7 +100,7 @@ public class MyClassVisitor extends ClassVisitor {
      */
     @Override
     public void visitSource(String source, String debug) {
-        System.out.println("Source: " + source);
+        //System.out.println("Source: " + source);
         super.visitSource(source, debug);
     }
 

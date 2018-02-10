@@ -20,12 +20,12 @@ public class MyMethodVisitor extends MethodVisitor {
 	protected static int count;
 	protected int line;
 	
-	private final static Pattern StrongOraclePattern; 
-	private final static Pattern WeakOraclePattern;
+	private final static String StrongOraclePattern;
+	private final static Pattern pattern; 
 
 	static{	         
-		StrongOraclePattern = Pattern.compile(".*strong\\soracle.*", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
-		WeakOraclePattern = Pattern.compile(".*weak\\soracle.*", Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		StrongOraclePattern = ".*strong\\soracle.*";
+		pattern = Pattern.compile(StrongOraclePattern, Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 	}
 	
 	public MyMethodVisitor(int api, MethodVisitor mv, int access, String name, String desc, String signature, String className, String[] exceptions) {
@@ -109,20 +109,20 @@ public class MyMethodVisitor extends MethodVisitor {
 		
 		// TODO: remove the code below and use @After to call the after method
 
-		if(methodName.equals("main")){
-			switch(opcode) {
-			case Opcodes.IRETURN:
-			case Opcodes.FRETURN:
-			case Opcodes.ARETURN:
-			case Opcodes.LRETURN:
-			case Opcodes.DRETURN:
-			case Opcodes.RETURN:			
-				super.visitMethodInsn(
-						Opcodes.INVOKESTATIC, "com/issta/Profiler", "afterTest", 
-						Type.getMethodDescriptor(Type.VOID_TYPE), false);
-				break;
-			}
-		}
+		// if(methodName.equals("main")){
+		// 	switch(opcode) {
+		// 	case Opcodes.IRETURN:
+		// 	case Opcodes.FRETURN:
+		// 	case Opcodes.ARETURN:
+		// 	case Opcodes.LRETURN:
+		// 	case Opcodes.DRETURN:
+		// 	case Opcodes.RETURN:			
+		// 		super.visitMethodInsn(
+		// 				Opcodes.INVOKESTATIC, "com/issta/Profiler", "afterTest", 
+		// 				Type.getMethodDescriptor(Type.VOID_TYPE), false);
+		// 		break;
+		// 	}
+		// }
 
 		switch(opcode){
 		case Opcodes.IMUL: 
@@ -167,10 +167,7 @@ public class MyMethodVisitor extends MethodVisitor {
 	public void visitLdcInsn(Object cst) {
 		if(cst instanceof String){
 			String temp = (String) cst;
-			if(
-					StrongOraclePattern.matcher(temp).matches()
-					|| WeakOraclePattern.matcher(temp).matches()
-					){
+			if(pattern.matcher(temp).matches()){
 				logNewOracle(temp);
 			}
 		}
@@ -269,7 +266,7 @@ public class MyMethodVisitor extends MethodVisitor {
 
 	private void logNewOracle(String oracleIdentifier){
 		super.visitLdcInsn(oracleIdentifier);
-		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "logOracle", 
+		super.visitMethodInsn(Opcodes.INVOKESTATIC, "com/issta/Profiler", "saveAndReset", 
 				Type.getMethodDescriptor(Type.VOID_TYPE, Type.getType(String.class)), false);
 	}
 	private final void push(final int value) {
