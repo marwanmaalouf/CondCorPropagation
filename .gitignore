@@ -3,3 +3,4 @@ out/
 Analysis/*.txt
 Analysis/*.png
 Analysis/Data/
+Analysis/*.csv
